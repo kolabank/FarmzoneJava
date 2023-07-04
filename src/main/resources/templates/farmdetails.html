@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+
+    <th:block th:replace="~{fragments/layout.html::headerfiles}"></th:block>
+
+
+    <title>Farm Details</title>
+
+</head>
+<body>
+
+<header th:insert="~{fragments/layout.html::navbar}"></header>
+
+<h2 th:text="${farm.name}"></h2>
+<p></p>
+
+<a class="btn btn-info" th:href="@{/farms}">Back to Farms </a>
+<p></p>
+
+<div class="row justify-content-around">
+    <div class="col-4">
+        <a  class="btn btn-primary btn-lg" th:href="@{/expense/{farm_id} (farm_id=${farm.id})}">Farm Finances</a>
+    </div>
+    <div class="col-4">
+        <a  class="btn btn-primary btn-lg" >Management Practices</a>
+    </div>
+</div>
+
+
+
+<table class="table table-striped table table-hover">
+    <thead>
+    <tr>
+        <th>S/N</th>
+        <th>Crop</th>
+        <th>Breed</th>
+        <th>Date Planted</th>
+        <th>Date Harvest</th>
+        <th>Stands</th>
+        <th>Area (m2)</th>
+    </tr>
+    </thead>
+
+
+
+    <tbody  th:each = "plant, index:${plants}">
+
+    <tr>
+        <td th:text="${index.count}"></td>
+        <td th:text="${plant.crop.cropname}"></td>
+        <td th:text="${plant.crop.breed}"></td>
+        <td th:text="${plant.plantingDate}"></td>
+        <td th:text="${plant.harvestDate}"></td>
+        <td th:text="${plant.stands}"></td>
+        <td th:text="${plant.area}"></td>
+    </tr>
+
+    </tbody>
+    ...
+</table>
+
+<h3>Add Planting Details</h3>
+
+<span>
+    <form action=# method = "POST" th:action="@{/addPlanting}" th:object="${plantDetails}">
+<select name="crop" id="crop" >
+    <option value = "">Select Crop</option>
+     <option th:each = "crop:${crops}" th:value="${crop.id}" th:text="${crop.cropname}" th:field ="*{crop}"></option>
+
+</select>
+
+<select name="breed" id="breed">
+    <option value = "">Select Breed</option>
+    <option th:each = "crop:${crops}" th:value="${crop.breed}" th:text="${crop.breed}"  th:field ="*{breed}"></option>
+
+</select>
+
+<input id = "date1" type="date" name = "date_planted" placeholder="Planting date" class="date" th:field="*{plantingDate}">
+<input id = "date2" type="date" name = "date_harvest" placeholder="Harvest date" class="date" th:field="*{harvestDate}">
+<input type="number" name = "stands" placeholder="Stands" th:field="*{stands}">
+<input type="number" name = "area" placeholder="Area (m2)" th:field="*{area}" >
+
+
+<button class="btn btn-info" type="submit">Add</button>
+</form>
+</span>
+
+<script th:src="@{/js/details.js}"></script>
+
+
+
+</body>
+</html>

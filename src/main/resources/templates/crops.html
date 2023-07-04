@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+
+    <th:block th:replace="fragments/layout::headerfiles"></th:block>
+
+    <title>Crops</title>
+
+</head>
+
+<body>
+
+<header th:insert="fragments/layout.html::navbar"></header>
+
+<div class="container-sm">
+    <table class="table table-bordered class=table-light table-striped">
+        <thead>
+        <tr>
+              <th>Crop</th>
+            <th>Breed</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="crop:${crops}">
+            <td th:text="${crop.cropname}"></td>
+            <td th:text="${crop.breed}"></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+
+    <form th:action="@{/newcrop}" method="get">
+        <button class="btn btn-danger">Add Crop</button>
+    </form>
+
+</div>
+</body>
+</html>
+
